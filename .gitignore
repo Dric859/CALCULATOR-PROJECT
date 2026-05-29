@@ -1,0 +1,26 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Excel temp files (created when file is open)
+~$*.xlsx
+~$*.xls
+
+# Thumbnails
+._*
+
+# macOS folder settings
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+db_config.php
