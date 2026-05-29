@@ -1,91 +1,58 @@
-/* style.css */
-
-/* Centers the calculator on the screen */
+/* Page background */
 body {
+    margin: 0;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* Full screen height */
-    height: 100vh;
-
-    /* Background color */
-    background-color: #f0f0f0;
-
-    /* Removes default page margin */
-    margin: 0;
-
-    /* Changes font */
+    background: #1e90ff;
     font-family: Arial, sans-serif;
 }
 
-/* Main calculator box */
+/* Calculator box */
 .calculator {
-    background-color: white;
-
-    /* Space inside the calculator */
+    background: white;
     padding: 20px;
-
-    /* Rounded corners */
-    border-radius: 10px;
-
-    /* Adds shadow */
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-
-    width: 250px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-/* Calculator screen */
+/* Display screen */
 #display {
     width: 100%;
-    height: 50px;
-
-    /* Larger text */
-    font-size: 24px;
-
-    /* Aligns numbers to the right */
+    height: 60px;
+    font-size: 28px;
     text-align: right;
-
+    color: black;
+    box-sizing: border-box;
     margin-bottom: 10px;
-
-    padding: 5px;
+    padding: 10px;
 }
 
-/* Grid layout for buttons */
+/* Button grid */
 .buttons {
     display: grid;
-
-    /* 4 columns */
     grid-template-columns: repeat(4, 1fr);
-
     gap: 10px;
 }
 
-/* General button styling */
+/* Buttons */
 button {
-    height: 50px;
-
-    font-size: 20px;
-
+    height: 60px;
+    background: #b0b0b0;
+    color: black;
     border: none;
-
-    border-radius: 5px;
-
-    background-color: #dddddd;
-
+    border-radius: 8px;
+    font-size: 24px;
     cursor: pointer;
 }
 
-/* Button hover effect */
 button:hover {
-    background-color: #bbbbbb;
+    background: #969696;
 }
 
-/* Clear button style */
-.clear {
+/* Zero spans full width */
+.zero {
     grid-column: span 4;
-
-    background-color: tomato;
-
-    color: white;
 }
