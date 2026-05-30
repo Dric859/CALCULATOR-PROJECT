@@ -1,75 +1,45 @@
 const display = document.getElementById("display");
 
-// Append value to display
+// Add input
 function append(v) {
     display.value += v;
 }
 
-// Clear everything
+// Clear all
 function clearDisplay() {
     display.value = "";
 }
 
-// Delete last character (backspace)
+// Backspace
 function backspace() {
     display.value = display.value.slice(0, -1);
 }
 
-/*
---------------------------------------------------
-SAFE CALCULATION ENGINE
-(avoids direct Function/eval abuse)
---------------------------------------------------
-*/
+// Calculate result
 function calculate() {
     try {
-        const result = safeCalculate(display.value);
-        display.value = result;
+        display.value = Function("return " + display.value)();
     } catch {
         display.value = "Error";
     }
 }
 
-/*
-Very small safe expression evaluator:
-- supports + - * /
-- respects order of operations via Function parser fallback is avoided
-*/
-function safeCalculate(expr) {
+// Keyboard support (optional but included)
+document.addEventListener("keydown", (e) => {
 
-    // Only allow valid characters (security + stability)
-    if (!/^[0-9+\-*/.() ]+$/.test(expr)) {
-        throw new Error("Invalid characters");
+    if (!isNaN(e.key) || "+-*/.".includes(e.key)) {
+        append(e.key);
     }
 
-    // Convert expression safely
-    // (still uses Function internally but now validated first)
-    return Function("return " + expr)();
-}
-
-/*
---------------------------------------------------
-KEYBOARD SUPPORT
---------------------------------------------------
-*/
-document.addEventListener("keydown", (event) => {
-
-    const key = event.key;
-
-    if (!isNaN(key)) {
-        append(key);
-    }
-    else if ("+-*/.".includes(key)) {
-        append(key);
-    }
-    else if (key === "Enter") {
-        event.preventDefault();
+    if (e.key === "Enter") {
         calculate();
     }
-    else if (key === "Backspace") {
+
+    if (e.key === "Backspace") {
         backspace();
     }
-    else if (key === "Escape") {
+
+    if (e.key === "Escape") {
         clearDisplay();
     }
 });
