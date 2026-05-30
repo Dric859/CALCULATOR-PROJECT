@@ -1,64 +1,74 @@
 const display = document.getElementById("display");
 
-// Add value to screen
+// Append value to display
 function append(v) {
     display.value += v;
 }
 
-// Clear screen
+// Clear everything
 function clearDisplay() {
     display.value = "";
 }
 
-// Calculate result
-function calculate() {
-    try {
-        display.value = Function("return " + display.value)();
-    } catch {
-        display.value = "Error";
-    }
-}
-
-// Remove last character (backspace)
+// Delete last character (backspace)
 function backspace() {
     display.value = display.value.slice(0, -1);
 }
 
 /*
------------------------------------------
-KEYBOARD SUPPORT
------------------------------------------
+--------------------------------------------------
+SAFE CALCULATION ENGINE
+(avoids direct Function/eval abuse)
+--------------------------------------------------
 */
-document.addEventListener("keydown", function (event) {
+function calculate() {
+    try {
+        const result = safeCalculate(display.value);
+        display.value = result;
+    } catch {
+        display.value = "Error";
+    }
+}
+
+/*
+Very small safe expression evaluator:
+- supports + - * /
+- respects order of operations via Function parser fallback is avoided
+*/
+function safeCalculate(expr) {
+
+    // Only allow valid characters (security + stability)
+    if (!/^[0-9+\-*/.() ]+$/.test(expr)) {
+        throw new Error("Invalid characters");
+    }
+
+    // Convert expression safely
+    // (still uses Function internally but now validated first)
+    return Function("return " + expr)();
+}
+
+/*
+--------------------------------------------------
+KEYBOARD SUPPORT
+--------------------------------------------------
+*/
+document.addEventListener("keydown", (event) => {
 
     const key = event.key;
 
-    // Numbers
     if (!isNaN(key)) {
         append(key);
     }
-
-    // Operators
-    else if (key === "+" || key === "-" || key === "*" || key === "/") {
+    else if ("+-*/.".includes(key)) {
         append(key);
     }
-
-    // Decimal point
-    else if (key === ".") {
-        append(key);
-    }
-
-    // Enter = calculate
     else if (key === "Enter") {
+        event.preventDefault();
         calculate();
     }
-
-    // Backspace = delete last character
     else if (key === "Backspace") {
         backspace();
     }
-
-    // Escape = clear
     else if (key === "Escape") {
         clearDisplay();
     }
