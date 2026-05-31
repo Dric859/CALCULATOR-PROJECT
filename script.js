@@ -1,45 +1,96 @@
 const display = document.getElementById("display");
+const historyDisplay = document.getElementById("history");
 
-// Add input
-function append(v) {
-    display.value += v;
+let currentInput = "";
+
+// Add number/operator
+function append(value) {
+
+    const operators = "+-*/";
+    const last = currentInput.slice(-1);
+
+    if (
+        operators.includes(last) &&
+        operators.includes(value)
+    ) {
+        return;
+    }
+
+    currentInput += value;
+    display.value = currentInput;
 }
 
-// Clear all
+// Clear everything
 function clearDisplay() {
+    currentInput = "";
     display.value = "";
+    historyDisplay.textContent = "";
 }
 
-// Backspace
+// Delete one character
 function backspace() {
-    display.value = display.value.slice(0, -1);
+    currentInput = currentInput.slice(0, -1);
+    display.value = currentInput;
 }
 
-// Calculate result
+// Calculate answer
 function calculate() {
+
+    if (!currentInput) return;
+
     try {
-        display.value = Function("return " + display.value)();
+
+        // Allow only safe characters
+        if (!/^[0-9+\-*/(). ]+$/.test(currentInput)) {
+            throw new Error();
+        }
+
+        const expression = currentInput;
+        const result = Function(
+            '"use strict"; return (' + expression + ')'
+        )();
+
+        historyDisplay.textContent =
+            expression + " = " + result;
+
+        currentInput = String(result);
+        display.value = currentInput;
+
     } catch {
+
         display.value = "Error";
+        currentInput = "";
     }
 }
 
-// Keyboard support (optional but included)
-document.addEventListener("keydown", (e) => {
+/*
+---------------------------------
+Keyboard Support
+---------------------------------
+*/
 
-    if (!isNaN(e.key) || "+-*/.".includes(e.key)) {
-        append(e.key);
+document.addEventListener("keydown", (event) => {
+
+    const key = event.key;
+
+    if (!isNaN(key)) {
+        append(key);
     }
 
-    if (e.key === "Enter") {
+    else if ("+-*/.".includes(key)) {
+        append(key);
+    }
+
+    else if (key === "Enter") {
+        event.preventDefault();
         calculate();
     }
 
-    if (e.key === "Backspace") {
+    else if (key === "Backspace") {
         backspace();
     }
 
-    if (e.key === "Escape") {
+    else if (key === "Escape") {
         clearDisplay();
     }
 });

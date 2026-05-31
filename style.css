@@ -1,73 +1,92 @@
-/* Background (dark iOS style) */
 body {
     margin: 0;
     height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     background: #000;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+    font-family: -apple-system,
+                 BlinkMacSystemFont,
+                 sans-serif;
 }
 
-/* Calculator container */
 .calculator {
-    width: 320px;
+    width: 340px;
 }
 
-/* Display */
+#history {
+    color: #888;
+    text-align: right;
+    font-size: 18px;
+    min-height: 25px;
+    margin-bottom: 8px;
+    padding-right: 8px;
+}
+
 #display {
     width: 100%;
-    height: 100px;
-    background: black;
-    border: none;
+    height: 90px;
+
+    background: #000;
     color: white;
-    font-size: 60px;
+
+    border: none;
+
+    font-size: 58px;
     text-align: right;
-    padding: 10px;
+
     box-sizing: border-box;
+    padding-right: 10px;
+    margin-bottom: 15px;
 }
 
-/* Grid */
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 12px;
 }
 
-/* Base buttons */
 button {
-    height: 70px;
-    border-radius: 50%;
+    height: 72px;
+
     border: none;
-    font-size: 24px;
+    border-radius: 50%;
+
+    font-size: 28px;
     cursor: pointer;
+
+    transition:
+        transform .08s ease,
+        filter .08s ease;
 
     background: #333;
     color: white;
 }
 
-/* Function buttons (AC, backspace) */
+button:active {
+    transform: scale(.95);
+    filter: brightness(1.2);
+}
+
 .func {
     background: #a5a5a5;
     color: black;
 }
 
-/* Operators */
 .op {
     background: #ff9f0a;
-    color: white;
 }
 
-/* Equal button */
 .equal {
     background: #ff9f0a;
-    color: white;
 }
 
-/* Zero button (wide like iPhone) */
 .zero {
     grid-column: span 2;
-    border-radius: 35px;
+    border-radius: 40px;
     text-align: left;
     padding-left: 28px;
 }

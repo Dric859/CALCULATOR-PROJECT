@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>iPhone Calculator</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="calculator">
 
-    <!-- Display -->
+    <div id="history"></div>
+
     <input id="display" type="text" readonly>
 
-    <!-- Buttons -->
     <div class="buttons">
 
         <button class="func" onclick="clearDisplay()">AC</button>
@@ -45,5 +44,6 @@
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
